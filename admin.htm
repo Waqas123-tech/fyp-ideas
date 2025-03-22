@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin - Add Project Idea</title>
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body>
+  <section class="submit-idea">
+    <h2>Add New Project Idea (Admin Only)</h2>
+    <form id="ideaForm">
+      <input type="text" id="ideaTitle" placeholder="Project Title" required><br>
+      <input type="text" id="ideaCategory" placeholder="Category (ai, iot, software, etc.)" required><br>
+      <textarea id="ideaDesc" placeholder="Project Description" required></textarea><br>
+      <input type="text" id="ideaImage" placeholder="Image Path (e.g., images/idea25.jpg)" required><br>
+      <button type="submit">Add Idea</button>
+    </form>
+  </section>
+
+  <script>
+    const ideaForm = document.getElementById('ideaForm');
+    ideaForm.addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const title = document.getElementById('ideaTitle').value;
+      const category = document.getElementById('ideaCategory').value.toLowerCase();
+      const desc = document.getElementById('ideaDesc').value;
+      const imgPath = document.getElementById('ideaImage').value;
+
+      const newCard = `
+        <div class="idea-card" data-category="${category}">
+          <img src="${imgPath}" alt="${title}">
+          <h3>${title}</h3>
+          <p>${desc}</p>
+        </div>`;
+
+      // Save to LocalStorage with unique key
+      localStorage.setItem(`idea_${Date.now()}`, newCard);
+
+      alert("✅ Idea added successfully! Refresh index.html to see it.");
+      ideaForm.reset();
+    });
+  </script>
+</body>
+</html>
